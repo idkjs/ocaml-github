@@ -1,4 +1,4 @@
-(*
+/*
  * Copyright (c) 2014 Andy Ray <andy.ray@ujamjar.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -13,17 +13,6 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *)
+ */
 
-module Time = struct
-  let now = Unix.gettimeofday
-  let sleep = Js_of_ocaml_lwt.Lwt_js.sleep
-end
-
-module Env = struct
-  let debug = false
-end
-
-module Github' = Github_core.Make(Env)(Time)(Cohttp_lwt_jsoo.Client)
-include Github'
-
+include Github_s.Github;

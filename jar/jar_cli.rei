@@ -1,4 +1,4 @@
-(*
+/*
  * Copyright (c) 2014 David Sheets <sheets@alum.mit.edu>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *)
+ */
 
-val repos : ?doc_append:string -> unit -> string list Cmdliner.Term.t
-val cookie : ?doc_append:string -> unit -> Github.Token.t Cmdliner.Term.t
+let repos: (~doc_append: string=?, unit) => Cmdliner.Term.t(list(string));
+let cookie: (~doc_append: string=?, unit) => Cmdliner.Term.t(Github.Token.t);

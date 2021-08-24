@@ -1,4 +1,4 @@
-(*
+/*
  * Copyright (c) 2012 Anil Madhavapeddy <anil@recoil.org>
  * Copyright (c) 2013 David Sheets <sheets@alum.mit.edu>
  *
@@ -14,14 +14,14 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *)
+ */
 
-type t
+type t;
 
-val init : ?jar_path:string -> unit -> t Lwt.t
-val save : t -> name:string -> auth:Github_t.auth -> t Lwt.t
-val delete : t -> name:string -> t Lwt.t
-val get_all : t -> (string * Github_t.auth) list Lwt.t
-val get : t -> name:string -> Github_t.auth option Lwt.t
+let init: (~jar_path: string=?, unit) => Lwt.t(t);
+let save: (t, ~name: string, ~auth: Github_t.auth) => Lwt.t(t);
+let delete: (t, ~name: string) => Lwt.t(t);
+let get_all: t => Lwt.t(list((string, Github_t.auth)));
+let get: (t, ~name: string) => Lwt.t(option(Github_t.auth));
 
-val jar_path : t -> string
+let jar_path: t => string;

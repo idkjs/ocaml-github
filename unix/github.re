@@ -1,4 +1,4 @@
-(*
+/*
  * Copyright (c) 2012-2014 Anil Madhavapeddy <anil@recoil.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -13,15 +13,18 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *)
+ */
 
-module Time = struct
-  let now = Unix.gettimeofday
-  let sleep = Lwt_unix.sleep
-end
+module Time = {
+  let now = Unix.gettimeofday;
+  let sleep = Lwt_unix.sleep;
+};
 
-module Env = struct
-  let debug = try Unix.getenv "GITHUB_DEBUG" <> "0" with _ -> false
-end
+module Env = {
+  let debug =
+    try(Unix.getenv("GITHUB_DEBUG") != "0") {
+    | _ => false
+    };
+};
 
-include Github_core.Make(Env)(Time)(Cohttp_lwt_unix.Client)
+include Github_core.Make(Env, Time, Cohttp_lwt_unix.Client);
