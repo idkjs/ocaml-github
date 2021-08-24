@@ -1,5 +1,5 @@
-(*
- * Copyright (c) 2012-2014 Anil Madhavapeddy <anil@recoil.org>
+/*
+ * Copyright (c) 2012 Anil Madhavapeddy <anil@recoil.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -13,13 +13,36 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- *)
+ */
 
-(** Portable functor to the GitHub API.
+open Lwt;
+open Printf;
 
-    The [Cohttp_lwt.Client] interface can be satisfied by a normal
-    [Cohttp_lwt_unix.Client], but also by the JavaScript Cohttp
-    client for use in a browser. *)
+let token = Config.access_token;
 
-module Make(Env: Github_s.Env)(Time: Github_s.Time)(CL : Cohttp_lwt.S.Client)
-  : Github_s.Github
+let t = {
+  let issue = {
+    Github_t.new_issue_title: "ocaml-github regression test",
+    new_issue_body: Some("ocaml-github body"),
+    new_issue_assignee: Some("avsm"),
+    new_issue_milestone: None,
+    new_issue_labels: [],
+  };
+
+  Github.(
+    Monad.(
+      run(
+        Issue.create(~token, ~user="avsm", ~repo="ocaml-github", ~issue, ())
+        >|= Response.value,
+      )
+    )
+  )
+  >>= (
+    issue => {
+      eprintf("created issue number %d\n%!", issue.Github_t.issue_number);
+      return();
+    }
+  );
+};
+
+let _ = Lwt_main.run(t);
